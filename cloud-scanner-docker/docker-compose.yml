@@ -1,7 +1,17 @@
-# Use postgres/example user/password credentials
 version: '3.1'
 
 services:
+
+  cloud-scanner-web:
+    image: cloud-scanner-web
+    depends_on:
+     - db
+    environment:
+      spring.datasource.url: jdbc:postgresql://db:5432/postgres
+    ports:
+      - 8080:8080
+    networks:
+      - backend
 
   db:
     image: postgres
@@ -10,9 +20,14 @@ services:
       POSTGRES_PASSWORD: example
     ports:
       - 5432:5432
+    networks:
+      - backend
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8081:8080
+
+networks:
+  backend:

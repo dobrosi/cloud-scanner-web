@@ -1,48 +1,73 @@
 package com.github.dobrosi.cloudscanner.repository;
 
+import static java.lang.System.currentTimeMillis;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Version;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
+import org.hashids.Hashids;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class BarcodeUser {
 
 	private @GeneratedValue @Id Long id;
-	
-	private @CreatedDate LocalDateTime createdDate;
 
 	private @Version Long version;
 
+	@JsonIgnore
+	private @CreatedDate LocalDateTime createdDate;
+
+	@JsonIgnore
 	private @LastModifiedDate LocalDateTime lastModifiedDate;
 
+	@JsonIgnore
 	private String loginId;
 
+	@NotBlank
+	@Pattern(regexp = "\\w*")
 	private String firstName;
 
+	@NotBlank
+	@Pattern(regexp = "\\w*")
 	private String lastName;
 
+	@NotBlank
+	@Email
 	private String email;
-	
-	@OneToMany(orphanRemoval = true)
+
+	@JsonIgnore
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Barcode> barcodes;
 
 	public BarcodeUser() {
 	}
 
-	public String getLoginId() {
-		return loginId;
+	@PrePersist
+	protected void generateLoginId() {
+		Hashids hashids = new Hashids("this is my salt");
+		loginId = hashids.encode(currentTimeMillis());
 	}
 
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
+	public String getLoginId() {
+		return loginId;
 	}
 
 	public String getFirstName() {
