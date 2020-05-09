@@ -1,58 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-class NameForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
+// src/App.js
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+import React, { Component } from 'react';
+import { Container, ButtonGroup, Button } from 'reactstrap';
+import Barcodes from './components/barcodes';
+import RegistrationForm from './components/registration';
+import LoginForm from './components/loginform';
+
+let url = 'http://192.168.1.102:8080/barcodes';
+let username = 'r5kVzDMZB';
+
+
+let headers = new Headers();
+headers.set('Authorization', 'Basic ' + btoa(username + ":"));
+
+class App extends Component {
+  state = {
+    barcodes: [],
+    page: 'home'
   }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  getBarcodeList(res) {
+    headers.set('set-cookie', res.headers.get('set-cookie'));
+      fetch(url, {method:'GET', headers: headers})
+      .then(res => res.json())
+      .then((data) => {
+         this.setState({ barcodes: data._embedded.barcodes })})
+      .catch(console.log)  
   }
+  componentDidMount() {
+  navigator.geolocation.getCurrentPosition(function(n){alert(n)});
+    fetch(url, {method:'GET', headers: headers}).then(res => 
+        this.getBarcodeList(res)
+      ).catch(console.log)
 
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
   }
-
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <Container>
+        <ButtonGroup>
+          <Button onClick={() => this.setState({ page: 'registration' })}>Registration</Button>
+          <Button onClick={() => this.setState({ page: 'login' })}>Login</Button>
+          <Button onClick={() => this.setState({ page: 'barcodes' })}>Barcodes</Button>
+        </ButtonGroup>
+        <div className='mt-4'>
+          {this.state.page === 'registration' && <RegistrationForm/>}
+          {this.state.page === 'login' && <LoginForm/>}
+          {this.state.page === 'barcodes' && <Barcodes barcodes={this.state.barcodes} />}
+        </div>
+      </Container>
     );
   }
-}
-function App() {
-	return new NameForm();
-/*
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload. hello!.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-*/
 }
 
 export default App;
