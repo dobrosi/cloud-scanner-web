@@ -1,9 +1,16 @@
-version: '3.1'
+version: '3.7'
 
 services:
 
-  cloud-scanner-web:
-    image: cloud-scanner-web
+  cloud-scanner-web-frontend:
+    image: cloud-scanner-web-frontend:prod
+    depends_on:
+     - cloud-scanner-web-backend
+    ports:
+      - 80:80
+
+  cloud-scanner-web-backend:
+    image: cloud-scanner-web-backend
     depends_on:
      - db
     environment:

@@ -27,7 +27,7 @@ cd cloud-scanner-web-backend
 docker build -t cloud-scanner-web-backend .
 
 cd cloud-scanner-web-frontend
-docker build -t cloud-scanner-web-backend .
+docker build -f Dockerfile.prod -t cloud-scanner-web-frontend:prod .
 ```
 
 ## Futtatás
@@ -36,6 +36,7 @@ cd cloud-scanner-docker
 docker-compose build
 docker-compose up
 
+chromium-browser http://localhost
 chromium-browser http://localhost:8080/swagger-ui.html
 ```
 
