@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,21 +17,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-class Barcode {
+public class Barcode {
 	private @GeneratedValue @Id Long id;
 
 	@JsonIgnore
 	private @CreatedDate LocalDateTime createdDate;
-
-	@ManyToOne
-	private BarcodeUser barcodeUser;
 
 	private String value;
 
 	@Embedded
 	private GpsInfo gpsInfo;
 
-	public Barcode() {
+	public Barcode() {}
+
+	public Barcode(String value) {
+		this();
+		this.value = value;
 	}
 
 	public LocalDateTime getCreatedDate() {
@@ -54,7 +55,21 @@ class Barcode {
 		this.gpsInfo = gpsInfo;
 	}
 
-	public BarcodeUser getBarcodeUser() {
-		return barcodeUser;
+	public Long getId() {
+		return id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Barcode)) {
+			return false;
+		}
+		Barcode that = (Barcode) obj;
+		return new EqualsBuilder().append(this.id, that.id).isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(id).toHashCode();
 	}
 }

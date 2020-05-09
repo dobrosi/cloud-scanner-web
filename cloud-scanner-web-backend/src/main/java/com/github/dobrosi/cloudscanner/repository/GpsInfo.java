@@ -8,9 +8,10 @@ public class GpsInfo {
 	private Double longitude;
 
 	private Double altitude;
-	
-	public GpsInfo() {}
-	
+
+	public GpsInfo() {
+	}
+
 	public Long getDate() {
 		return date;
 	}

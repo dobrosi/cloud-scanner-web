@@ -1,5 +1,7 @@
 package com.github.dobrosi.cloudscanner.application;
 
+import static com.github.dobrosi.cloudscanner.repository.BarcodeUserFactory.create;
+import static java.lang.String.format;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.boot.SpringApplication.run;
 
@@ -11,11 +13,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 import com.github.dobrosi.cloudscanner.configuration.CloudScannerApplicationConfiguration;
-import com.github.dobrosi.cloudscanner.repository.BarcodeUser;
+import com.github.dobrosi.cloudscanner.configuration.SpringFoxConfig;
 import com.github.dobrosi.cloudscanner.repository.BarcodeUserRepository;
 
 @SpringBootApplication
-@Import(CloudScannerApplicationConfiguration.class)
+@Import({CloudScannerApplicationConfiguration.class, SpringFoxConfig.class})
 public class CloudScannerApplication {
 	Logger logger = getLogger(CloudScannerApplication.class);
 
@@ -27,13 +29,12 @@ public class CloudScannerApplication {
 	}
 
 	@PostConstruct
-	public void createTestAdmin() {
-		BarcodeUser admin = new BarcodeUser();
-		admin.setEmail("test@test.com");
-		admin.setFirstName("Elek");
-		admin.setLastName("Teszt");
-		String adminLoginId = barcodeUserRepository.save(admin).getLoginId();
-		logger.info("Admin loginId: " + adminLoginId);
+	private void createTestAdmin() {
+		logger
+				.info(
+						format(
+								"Admin loginId: %s",
+								barcodeUserRepository
+										.save(create().withEmail("test@test.com").withFirstName("firstName").withLastName("lastName").asAdmin().build())));
 	}
-
 }

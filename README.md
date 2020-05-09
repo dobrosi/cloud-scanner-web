@@ -23,6 +23,7 @@ Az alkalmazás nem szükséges, hogy jelentős üzleti logikát tartalmazzon. A 
 git clone https://github.com/dobrosi/cloud-scanner-web.git
 cd cloud-scanner-web
 mvn clean package
+cd cloud-scanner-web
 docker build -t cloud-scanner-web .
 ```
 

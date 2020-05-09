@@ -23,7 +23,6 @@
 
 	<modules>
 		<module>cloud-scanner-web-backend</module>
-		<module>cloud-scanner-web-application</module>
 	</modules>
 
 	<repositories>

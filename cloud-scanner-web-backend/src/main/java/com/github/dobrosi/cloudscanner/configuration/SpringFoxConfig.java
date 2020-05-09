@@ -22,11 +22,7 @@ public class SpringFoxConfig {
 	public Docket api() {
 		List<SecurityScheme> securitySchemes = asList(new BasicAuth("basicAuth"));
 
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.any())
-				.build()
-				.securitySchemes(securitySchemes);
+		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any()).build().securitySchemes(securitySchemes);
 	}
 }

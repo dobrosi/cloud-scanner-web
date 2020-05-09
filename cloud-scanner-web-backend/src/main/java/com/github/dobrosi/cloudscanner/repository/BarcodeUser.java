@@ -3,6 +3,7 @@ package com.github.dobrosi.cloudscanner.repository;
 import static java.lang.System.currentTimeMillis;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,7 +28,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class BarcodeUser {
-
+	public enum Role {
+		ROLE_ADMIN, ROLE_BARCODEUSER
+	}
+	
 	private @GeneratedValue @Id Long id;
 
 	private @Version Long version;
@@ -55,7 +59,10 @@ public class BarcodeUser {
 
 	@JsonIgnore
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<Barcode> barcodes;
+	private List<Barcode> barcodes = new ArrayList<Barcode>();
+
+	@JsonIgnore
+	private boolean admin;
 
 	public BarcodeUser() {
 	}
@@ -108,5 +115,18 @@ public class BarcodeUser {
 
 	public LocalDateTime getCreatedDate() {
 		return createdDate;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+	
+	@Override
+	public String toString() {
+		return loginId;
 	}
 }
