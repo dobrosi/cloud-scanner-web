@@ -1,6 +1,5 @@
 language: java
 
-script: "mvn cobertura:cobertura"
-
 after_success:
+  - export CODECOV_TOKEN="373ac4f5-7c81-4a23-ad55-7f3bd6dd3a6e"
   - bash <(curl -s https://codecov.io/bash)
