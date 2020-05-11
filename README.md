@@ -1,4 +1,5 @@
-# cloud-scanner-web
+# cloud-scanner-web 
+[![Build Status](https://travis-ci.com/dobrosi/cloud-scanner-web.svg?branch=develop)](https://travis-ci.com/github/dobrosi/cloud-scanner-web)
 
 ## Projekt célja
 A cloud-scanner projekt célja egy olyan rendszer készítése, amivel felhasználók vonalkódokat menthetnek le, valamint küldhetnek át. Egy egyszerű felhasználói regisztráció után böngésző, vagy mobiltelefon segítségével vonalkódokat lehet rögzíteni. A program segítségével lehetőség lesz későbbiekben, hogy a telefonunkat mint vonalkód olvasóként használva a számítógépünkre, vagy egyéb távoli eszközre vonalkódot küldjünk. Az összes leolvasott vonalkód a "felhőbe" kerül mentésre, amelyek későbbiekben visszakereshetőek, valamint törölhetőek.
