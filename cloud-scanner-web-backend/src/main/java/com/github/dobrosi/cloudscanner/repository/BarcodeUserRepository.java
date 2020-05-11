@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost"})
 public interface BarcodeUserRepository extends CrudRepository<BarcodeUser, Long> {
 	@Override
 	<S extends BarcodeUser> S save(S entity);

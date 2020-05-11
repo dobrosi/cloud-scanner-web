@@ -35,6 +35,7 @@ public class BarcodeController {
 	}
 
 	@PutMapping("/barcode/save")
+	@Transactional
 	public ResponseEntity<Boolean> save(@RequestBody @Valid Barcode barcode) {
 		return ok(getBarcodes().add(barcode));
 	}

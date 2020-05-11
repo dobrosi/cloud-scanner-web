@@ -17,6 +17,14 @@ Jelenleg a felsorolt pár alap funkciókat tartalmazza:
 * mentés
 * hibakezelés
 
+## Fordítás, futtatás
+```
+git clone https://github.com/dobrosi/cloud-scanner-web.git
+cd cloud-scanner-web
+./build.sh
+./run.sh
+```
+
 ## Fordítás
 ```
 git clone https://github.com/dobrosi/cloud-scanner-web.git

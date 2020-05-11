@@ -34,6 +34,10 @@ public class Barcode {
 		this();
 		this.value = value;
 	}
+	
+	public Long getId() {
+		return id;
+	}
 
 	public LocalDateTime getCreatedDate() {
 		return createdDate;
@@ -53,10 +57,6 @@ public class Barcode {
 
 	public void setGpsInfo(GpsInfo gpsInfo) {
 		this.gpsInfo = gpsInfo;
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 	@Override

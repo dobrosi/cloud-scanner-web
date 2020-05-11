@@ -46,11 +46,11 @@ public class BarcodeUser {
 	private String loginId;
 
 	@NotBlank
-	@Pattern(regexp = "\\w*")
+	@Pattern(regexp = "^[A-Za-záéiíoóöőuúüűÁÉIÍOÓÖŐUÚÜŰä]*$")
 	private String firstName;
 
 	@NotBlank
-	@Pattern(regexp = "\\w*")
+	@Pattern(regexp = "^[A-Za-záéiíoóöőuúüűÁÉIÍOÓÖŐUÚÜŰä]*$")
 	private String lastName;
 
 	@NotBlank
