@@ -20,6 +20,8 @@ class App extends Component {
   
   barcodeuser = {}
   
+  loginId = null
+  
   status(response) {
 	if (response.status >= 200 && response.status < 300) {
       return Promise.resolve(response)
@@ -33,10 +35,10 @@ class App extends Component {
   }
   
   doFetch(method, url, s, e, body, headers) { 
-	if (headers == undefined) {
+	if (headers == null) {
       headers = this.createHeaders();
 	}
-    if (body != undefined) {
+    if (body != null) {
     	body = JSON.stringify(body);
     }
     if (s == null) {
@@ -121,7 +123,8 @@ class App extends Component {
   }
   
   logout() {
-	thisApp.loginId = '';
+	thisApp.loginId = null;
+	thisApp.barcodeuser = {};
 	thisApp.doGet('/perform_logout', thisApp.goToLogin);
 	thisApp.setState({ page: 'login', authenticated: false });
 	
