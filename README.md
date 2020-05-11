@@ -23,6 +23,7 @@ git clone https://github.com/dobrosi/cloud-scanner-web.git
 cd cloud-scanner-web
 ./build.sh
 ./run.sh
+chromium-browser http://localhost
 ```
 
 ## Fordítás
