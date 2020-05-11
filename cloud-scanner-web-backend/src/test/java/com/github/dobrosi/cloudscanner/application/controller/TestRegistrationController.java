@@ -36,6 +36,7 @@ public class TestRegistrationController {
 		String source = objectMapper.writeValueAsString(createNotAdminBarcodeUser());
 
 		String loginId = TestHelper.performOk(mockMvc, post("/signUp").contentType(APPLICATION_JSON).content(source));
+		loginId = loginId.split(":")[1].replaceAll("\\W", "");
 
 		String saved = objectMapper.writeValueAsString(barcodeUserRepository.findByLoginId(loginId));
 		Assert.assertThat(saved, is(source));

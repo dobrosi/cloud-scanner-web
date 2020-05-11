@@ -1,5 +1,7 @@
 package com.github.dobrosi.cloudscanner.controller;
 
+import static java.lang.String.format;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,6 @@ public class RegistrationController {
 	@PostMapping("/signUp")
 	public ResponseEntity<String> signUp(@RequestBody @Valid BarcodeUser barcodeUser) {
 		barcodeUser = barcodeUserRepository.save(barcodeUser);
-		return ResponseEntity.ok(barcodeUser.getLoginId());
+		return ResponseEntity.ok(format("{  \"response\" : \"%s\" }", barcodeUser.getLoginId()));
 	}
 }
